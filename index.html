@@ -1,0 +1,1433 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SiteForge AI | Professional AI Website Creation for Agencies</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
+            --bg-dark: #0f172a;
+            --bg-card: #1e293b;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #334155;
+            --accent: #10b981;
+            --danger: #ef4444;
+            --sidebar-width: 260px;
+            --panel-width: 320px;
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        h1, h2, h3, h4, .brand {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            font-weight: 700;
+        }
+
+        button {
+            cursor: pointer;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            padding: 12px 24px;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-hover);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(99, 102, 241, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-card);
+            color: var(--text-main);
+            border: 1px solid var(--border);
+            padding: 12px 24px;
+        }
+
+        .btn-secondary:hover {
+            background: #2d3748;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-main);
+            padding: 8px 16px;
+        }
+
+        .btn-outline:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        input, textarea, select {
+            background: #0f172a;
+            border: 1px solid var(--border);
+            color: white;
+            padding: 12px;
+            border-radius: 8px;
+            width: 100%;
+            font-family: inherit;
+        }
+
+        input:focus, textarea:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+        }
+
+        /* --- Views --- */
+        .view {
+            display: none;
+            min-height: 100vh;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* --- Landing Page --- */
+        .landing-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 24px 80px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .brand {
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-main);
+            text-decoration: none;
+        }
+
+        .brand span {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--text-main);
+        }
+
+        .hero {
+            padding: 180px 20px 100px;
+            text-align: center;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .badge {
+            background: rgba(99, 102, 241, 0.1);
+            color: var(--primary);
+            padding: 6px 16px;
+            border-radius: 100px;
+            font-size: 14px;
+            font-weight: 600;
+            border: 1px solid rgba(99, 102, 241, 0.2);
+            margin-bottom: 24px;
+            display: inline-block;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            line-height: 1.1;
+            margin-bottom: 24px;
+            background: linear-gradient(to bottom right, #fff 30%, #94a3b8);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 20px;
+            color: var(--text-muted);
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+        }
+
+        .product-preview {
+            margin-top: 80px;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .product-preview img {
+            width: 100%;
+            display: block;
+        }
+
+        /* --- Sections --- */
+        .section {
+            padding: 100px 80px;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-size: 42px;
+            margin-bottom: 16px;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 32px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+        }
+
+        .card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--bg-dark);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 24px;
+            color: var(--primary);
+            font-size: 24px;
+        }
+
+        /* --- Auth View --- */
+        .auth-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .auth-card {
+            width: 100%;
+            max-width: 400px;
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 16px;
+            border: 1px solid var(--border);
+        }
+
+        .auth-card h2 {
+            margin-bottom: 8px;
+            text-align: center;
+        }
+
+        .auth-card p {
+            text-align: center;
+            color: var(--text-muted);
+            margin-bottom: 32px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        /* --- Dashboard --- */
+        .dashboard-layout {
+            display: flex;
+            height: 100vh;
+        }
+
+        .sidebar {
+            width: var(--sidebar-width);
+            border-right: 1px solid var(--border);
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            background: #0f172a;
+        }
+
+        .sidebar-nav {
+            margin-top: 40px;
+            flex-grow: 1;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            color: var(--text-muted);
+            text-decoration: none;
+            border-radius: 8px;
+            margin-bottom: 4px;
+            transition: var(--transition);
+        }
+
+        .nav-item.active {
+            background: var(--bg-card);
+            color: var(--text-main);
+        }
+
+        .nav-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-main);
+        }
+
+        .main-content {
+            flex-grow: 1;
+            padding: 40px 60px;
+            overflow-y: auto;
+        }
+
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 24px;
+            margin-bottom: 48px;
+        }
+
+        .stat-card {
+            background: var(--bg-card);
+            padding: 24px;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+        }
+
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+
+        .stat-value {
+            font-size: 28px;
+            font-weight: 700;
+        }
+
+        .projects-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border);
+            transition: var(--transition);
+        }
+
+        .project-card:hover {
+            border-color: var(--primary);
+        }
+
+        .project-thumb {
+            height: 180px;
+            background: #0f172a;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .project-thumb img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.6;
+        }
+
+        .project-info {
+            padding: 20px;
+        }
+
+        .project-status {
+            font-size: 12px;
+            padding: 2px 8px;
+            border-radius: 4px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent);
+        }
+
+        /* --- Generator --- */
+        .generator-view {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 80px 20px;
+        }
+
+        .gen-step {
+            display: none;
+        }
+
+        .gen-step.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .prompt-examples {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        .prompt-tag {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            padding: 8px 16px;
+            border-radius: 100px;
+            font-size: 13px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .prompt-tag:hover {
+            border-color: var(--primary);
+            background: rgba(99, 102, 241, 0.1);
+        }
+
+        /* --- Editor --- */
+        .editor-container {
+            display: flex;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .editor-sidebar {
+            width: var(--sidebar-width);
+            background: #0f172a;
+            border-right: 1px solid var(--border);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-main {
+            flex-grow: 1;
+            background: #1e293b;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .editor-header {
+            height: 64px;
+            background: #0f172a;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+        }
+
+        .device-toggle {
+            display: flex;
+            background: var(--bg-card);
+            border-radius: 8px;
+            padding: 4px;
+            border: 1px solid var(--border);
+        }
+
+        .device-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            color: var(--text-muted);
+        }
+
+        .device-btn.active {
+            background: var(--bg-dark);
+            color: var(--text-main);
+        }
+
+        .canvas-container {
+            flex-grow: 1;
+            padding: 40px;
+            overflow-y: auto;
+            display: flex;
+            justify-content: center;
+            background: #020617;
+        }
+
+        .website-canvas {
+            background: white;
+            width: 100%;
+            max-width: 1200px;
+            min-height: 1000px;
+            border-radius: 8px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            transition: var(--transition);
+            transform-origin: top center;
+            overflow: hidden;
+        }
+
+        .canvas-tablet { max-width: 768px; }
+        .canvas-mobile { max-width: 375px; }
+
+        .editor-panel {
+            width: var(--panel-width);
+            background: #0f172a;
+            border-left: 1px solid var(--border);
+            padding: 24px;
+            overflow-y: auto;
+        }
+
+        /* --- AI Copilot --- */
+        .copilot-btn {
+            position: fixed;
+            bottom: 32px;
+            right: 32px;
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--primary);
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            z-index: 1001;
+            cursor: pointer;
+        }
+
+        .copilot-panel {
+            position: fixed;
+            bottom: 110px;
+            right: 32px;
+            width: 380px;
+            height: 500px;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            display: none;
+            flex-direction: column;
+            z-index: 1001;
+            overflow: hidden;
+        }
+
+        .copilot-panel.active {
+            display: flex;
+        }
+
+        .copilot-header {
+            padding: 20px;
+            border-bottom: 1px solid var(--border);
+            background: rgba(99, 102, 241, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .copilot-messages {
+            flex-grow: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .msg {
+            padding: 12px 16px;
+            border-radius: 12px;
+            max-width: 85%;
+            font-size: 14px;
+        }
+
+        .msg-ai {
+            background: #334155;
+            align-self: flex-start;
+        }
+
+        .msg-user {
+            background: var(--primary);
+            align-self: flex-end;
+        }
+
+        .copilot-input {
+            padding: 16px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            gap: 10px;
+        }
+
+        /* --- Generated Site Components --- */
+        .site-section {
+            padding: 80px 40px;
+            position: relative;
+            color: #334155;
+        }
+
+        .site-section:hover::after {
+            content: 'Click to Edit';
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--primary);
+            color: white;
+            font-size: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            z-index: 10;
+        }
+
+        .site-hero {
+            background: #f8fafc;
+            text-align: center;
+            padding: 120px 40px;
+        }
+
+        .site-hero h1 { font-size: 48px; color: #0f172a; margin-bottom: 20px; }
+        .site-hero p { font-size: 18px; color: #64748b; max-width: 600px; margin: 0 auto 32px; }
+
+        .site-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 40px 0;
+        }
+
+        .site-card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+        }
+
+        .site-footer {
+            background: #0f172a;
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        /* --- Utilities --- */
+        .loading-overlay {
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(15, 23, 42, 0.95);
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(99, 102, 241, 0.1);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 24px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* --- Responsive Landing --- */
+        @media (max-width: 1024px) {
+            .landing-nav { padding: 20px 40px; }
+            .hero h1 { font-size: 56px; }
+            .grid-3 { grid-template-columns: repeat(2, 1fr); }
+            .section { padding: 80px 40px; }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .hero h1 { font-size: 42px; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .sidebar { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Loading Overlay -->
+    <div id="loading" class="loading-overlay">
+        <div class="spinner"></div>
+        <h2 id="loadingText">Forging your website...</h2>
+        <p style="color: var(--text-muted); margin-top: 8px;">Our AI is crafting layouts and copy.</p>
+    </div>
+
+    <!-- 1. Landing Page View -->
+    <div id="view-landing" class="view active">
+        <nav class="landing-nav">
+            <a href="#" class="brand">Site<span>Forge</span> AI</a>
+            <div class="nav-links">
+                <a href="#features">Features</a>
+                <a href="#agencies">Agencies</a>
+                <a href="#pricing">Pricing</a>
+                <button class="btn-outline" onclick="switchView('login')">Login</button>
+                <button class="btn-primary" onclick="switchView('signup')">Get Started</button>
+            </div>
+        </nav>
+
+        <section class="hero">
+            <div class="badge">Next-Gen AI Website Builder</div>
+            <h1>Turn an idea into a <br>complete website.</h1>
+            <p>Describe your business, generate a professional website in seconds, refine it with AI Copilot, and launch faster than ever before.</p>
+            <div class="hero-btns">
+                <button class="btn-primary" onclick="switchView('signup')">Create a Website</button>
+                <button class="btn-secondary" onclick="switchView('demo')">View Demo</button>
+            </div>
+
+            <div class="product-preview">
+                <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?auto=format&fit=crop&q=80&w=2426&h=1200" alt="Dashboard Preview">
+            </div>
+        </section>
+
+        <section id="features" class="section">
+            <div class="section-header">
+                <h2>Built for modern workflows</h2>
+                <p style="color: var(--text-muted)">Everything you need to go from concept to production.</p>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-icon">✨</div>
+                    <h3>AI Generation</h3>
+                    <p style="color: var(--text-muted); margin-top: 12px;">Not just templates. SiteForge generates custom layouts and copy based on your specific business goals.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🎨</div>
+                    <h3>Visual Editor</h3>
+                    <p style="color: var(--text-muted); margin-top: 12px;">A powerful drag-and-drop experience that gives you full control over every pixel without writing code.</p>
+                </div>
+                <div class="card">
+                    <div class="card-icon">🤖</div>
+                    <h3>AI Copilot</h3>
+                    <p style="color: var(--text-muted); margin-top: 12px;">Your personal design assistant. Ask it to improve copy, suggest colors, or optimize for conversion.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="agencies" class="section" style="background: #020617;">
+            <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; gap: 60px; flex-wrap: wrap;">
+                <div style="flex: 1; min-width: 300px;">
+                    <div class="badge">Agency Focused</div>
+                    <h2 style="font-size: 48px; margin-bottom: 24px;">Deliver 10x faster.</h2>
+                    <p style="color: var(--text-muted); margin-bottom: 32px; font-size: 18px;">SiteForge allows agencies to handle more clients without increasing overhead. Rapidly prototype and hand over production-ready sites in minutes.</p>
+                    <ul style="list-style: none; color: var(--text-muted); margin-bottom: 32px;">
+                        <li style="margin-bottom: 12px;">✅ White-label architecture</li>
+                        <li style="margin-bottom: 12px;">✅ Client management dashboard</li>
+                        <li style="margin-bottom: 12px;">✅ Reusable agency templates</li>
+                        <li style="margin-bottom: 12px;">✅ API-ready infrastructure</li>
+                    </ul>
+                    <button class="btn-primary" onclick="switchView('signup')">Request Agency Demo</button>
+                </div>
+                <div style="flex: 1; min-width: 300px; background: var(--bg-card); border: 1px solid var(--border); border-radius: 20px; padding: 40px;">
+                    <div style="display: flex; gap: 12px; margin-bottom: 24px;">
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #ff5f56;"></div>
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #ffbd2e;"></div>
+                        <div style="width: 12px; height: 12px; border-radius: 50%; background: #27c93f;"></div>
+                    </div>
+                    <div style="color: var(--primary); font-family: monospace; margin-bottom: 16px;">// AI Request</div>
+                    <div style="color: var(--text-main); font-family: monospace;">
+                        POST /api/v1/generate { <br>
+                        &nbsp;&nbsp;"industry": "Luxury Interior Design",<br>
+                        &nbsp;&nbsp;"tone": "Premium",<br>
+                        &nbsp;&nbsp;"target": "High-income homeowners"<br>
+                        }
+                    </div>
+                    <div style="margin-top: 24px; padding-top: 24px; border-top: 1px solid var(--border);">
+                        <div style="font-weight: 700;">Response received in 1.4s</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="pricing" class="section">
+            <div class="section-header">
+                <h2>Simple, scalable pricing</h2>
+            </div>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Free</h3>
+                    <div style="font-size: 32px; font-weight: 800; margin: 16px 0;">$0</div>
+                    <ul style="list-style: none; color: var(--text-muted); margin-bottom: 32px; font-size: 14px;">
+                        <li style="margin-bottom: 12px;">• 1 Website project</li>
+                        <li style="margin-bottom: 12px;">• 5 AI Generations</li>
+                        <li style="margin-bottom: 12px;">• SiteForge Branding</li>
+                    </ul>
+                    <button class="btn-secondary" style="width: 100%" onclick="switchView('signup')">Get Started</button>
+                </div>
+                <div class="card" style="border-color: var(--primary); position: relative;">
+                    <div style="position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--primary); color: white; padding: 4px 12px; border-radius: 100px; font-size: 12px; font-weight: 700;">MOST POPULAR</div>
+                    <h3>Pro</h3>
+                    <div style="font-size: 32px; font-weight: 800; margin: 16px 0;">$49<span style="font-size: 16px; color: var(--text-muted)">/mo</span></div>
+                    <ul style="list-style: none; color: var(--text-muted); margin-bottom: 32px; font-size: 14px;">
+                        <li style="margin-bottom: 12px;">• Unlimited projects</li>
+                        <li style="margin-bottom: 12px;">• AI Copilot access</li>
+                        <li style="margin-bottom: 12px;">• Custom domains</li>
+                        <li style="margin-bottom: 12px;">• No branding</li>
+                    </ul>
+                    <button class="btn-primary" style="width: 100%" onclick="switchView('signup')">Start Free Trial</button>
+                </div>
+                <div class="card">
+                    <h3>Agency</h3>
+                    <div style="font-size: 32px; font-weight: 800; margin: 16px 0;">$199<span style="font-size: 16px; color: var(--text-muted)">/mo</span></div>
+                    <ul style="list-style: none; color: var(--text-muted); margin-bottom: 32px; font-size: 14px;">
+                        <li style="margin-bottom: 12px;">• White-label dashboard</li>
+                        <li style="margin-bottom: 12px;">• API access</li>
+                        <li style="margin-bottom: 12px;">• Client portals</li>
+                        <li style="margin-bottom: 12px;">• Priority support</li>
+                    </ul>
+                    <button class="btn-secondary" style="width: 100%" onclick="switchView('signup')">Contact Sales</button>
+                </div>
+            </div>
+        </section>
+
+        <footer style="padding: 80px; border-top: 1px solid var(--border); text-align: center;">
+            <div class="brand" style="justify-content: center; margin-bottom: 24px;">Site<span>Forge</span> AI</div>
+            <p style="color: var(--text-muted); margin-bottom: 32px;">© 2024 SiteForge AI. All rights reserved.</p>
+            <div class="nav-links" style="justify-content: center;">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Security</a>
+                <a href="#">Status</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- 2. Auth Views -->
+    <div id="view-signup" class="view">
+        <div class="auth-container">
+            <div class="auth-card">
+                <a href="#" onclick="switchView('landing')" class="brand" style="justify-content: center; margin-bottom: 32px;">Site<span>Forge</span> AI</a>
+                <h2>Create your account</h2>
+                <p>Start building websites with AI today.</p>
+                <form onsubmit="handleAuth(event, 'signup')">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 12px;">Create Account</button>
+                </form>
+                <p style="margin-top: 24px; font-size: 14px;">Already have an account? <a href="#" onclick="switchView('login')" style="color: var(--primary); text-decoration: none;">Log in</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div id="view-login" class="view">
+        <div class="auth-container">
+            <div class="auth-card">
+                <a href="#" onclick="switchView('landing')" class="brand" style="justify-content: center; margin-bottom: 32px;">Site<span>Forge</span> AI</a>
+                <h2>Welcome back</h2>
+                <p>Log in to manage your agency projects.</p>
+                <form onsubmit="handleAuth(event, 'login')">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" placeholder="john@example.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%; margin-top: 12px;">Log In</button>
+                </form>
+                <p style="margin-top: 24px; font-size: 14px;">New to SiteForge? <a href="#" onclick="switchView('signup')" style="color: var(--primary); text-decoration: none;">Sign up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. Dashboard View -->
+    <div id="view-dashboard" class="view">
+        <div class="dashboard-layout">
+            <aside class="sidebar">
+                <div class="brand">Site<span>Forge</span> AI</div>
+                <nav class="sidebar-nav">
+                    <a href="#" class="nav-item active"><span>📊</span> Overview</a>
+                    <a href="#" class="nav-item"><span>📁</span> Projects</a>
+                    <a href="#" class="nav-item"><span>📑</span> Templates</a>
+                    <a href="#" class="nav-item"><span>👥</span> Clients</a>
+                    <a href="#" class="nav-item"><span>🔌</span> API Keys</a>
+                    <div style="margin-top: 40px; padding: 12px; font-size: 12px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Organization</div>
+                    <a href="#" class="nav-item"><span>⚙️</span> Settings</a>
+                    <a href="#" class="nav-item"><span>💳</span> Billing</a>
+                </nav>
+                <div style="padding-top: 20px; border-top: 1px solid var(--border);">
+                    <a href="#" onclick="switchView('landing')" class="nav-item"><span>Logout</span></a>
+                </div>
+            </aside>
+            <main class="main-content">
+                <div class="top-bar">
+                    <h1>Dashboard</h1>
+                    <button class="btn-primary" onclick="switchView('generator')">+ Create New Website</button>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-label">Total Projects</div>
+                        <div class="stat-value">12</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Published Sites</div>
+                        <div class="stat-value">8</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">AI Credits</div>
+                        <div class="stat-value">840</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-label">Active Clients</div>
+                        <div class="stat-value">5</div>
+                    </div>
+                </div>
+
+                <div class="projects-header">
+                    <h2>Recent Projects</h2>
+                    <a href="#" style="color: var(--primary); font-size: 14px; text-decoration: none;">View all projects</a>
+                </div>
+
+                <div class="projects-grid" id="projectsList">
+                    <!-- Project cards will be injected here -->
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <!-- 4. Generator View -->
+    <div id="view-generator" class="view">
+        <div class="generator-view">
+            <button class="btn-outline" onclick="switchView('dashboard')" style="margin-bottom: 40px;">← Back to Dashboard</button>
+            
+            <div id="gen-step-1" class="gen-step active">
+                <h1 style="font-size: 42px; margin-bottom: 16px;">What are we building today?</h1>
+                <p style="color: var(--text-muted); margin-bottom: 40px;">Describe your business in a few sentences. Our AI will handle the rest.</p>
+                
+                <div class="form-group">
+                    <label>Business Name</label>
+                    <input type="text" id="gen-name" placeholder="e.g. Lumina Design Studio">
+                </div>
+                
+                <div class="form-group">
+                    <label>Business Description</label>
+                    <textarea id="gen-desc" rows="5" placeholder="e.g. A luxury interior design studio specializing in minimalist, modern homes for high-income homeowners in London."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label>Industry</label>
+                    <select id="gen-industry">
+                        <option value="agency">Agency / Portfolio</option>
+                        <option value="saas">SaaS / Technology</option>
+                        <option value="restaurant">Restaurant / Hospitality</option>
+                        <option value="realestate">Real Estate</option>
+                        <option value="consulting">Professional Services</option>
+                    </select>
+                </div>
+
+                <div class="prompt-examples">
+                    <span class="prompt-tag" onclick="fillPrompt('Lumina Design', 'Luxury interior design studio for high-income homeowners.')">Luxury Design</span>
+                    <span class="prompt-tag" onclick="fillPrompt('ByteFlow', 'A modern SaaS platform for automated project management.')">SaaS Startup</span>
+                    <span class="prompt-tag" onclick="fillPrompt('The Golden Fork', 'High-end Italian restaurant with a focus on organic ingredients.')">Restaurant</span>
+                    <span class="prompt-tag" onclick="fillPrompt('Zenith Realty', 'Luxury real estate agency specializing in coastal properties.')">Real Estate</span>
+                </div>
+
+                <button class="btn-primary" style="width: 100%; margin-top: 40px; padding: 16px;" onclick="generateWebsite()">Generate Website ✨</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 5. Visual Editor View -->
+    <div id="view-editor" class="view">
+        <div class="editor-container">
+            <aside class="editor-sidebar">
+                <div style="padding: 20px; border-bottom: 1px solid var(--border);">
+                    <button class="btn-outline" style="width: 100%; font-size: 12px;" onclick="switchView('dashboard')">← Dashboard</button>
+                </div>
+                <div style="padding: 20px;">
+                    <h4 style="margin-bottom: 16px; font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Pages</h4>
+                    <div class="nav-item active" style="font-size: 14px;"><span>📄</span> Home</div>
+                    <div class="nav-item" style="font-size: 14px;"><span>📄</span> About</div>
+                    <div class="nav-item" style="font-size: 14px;"><span>📄</span> Services</div>
+                    <div class="nav-item" style="font-size: 14px;"><span>📄</span> Contact</div>
+                </div>
+                <div style="padding: 20px; border-top: 1px solid var(--border);">
+                    <h4 style="margin-bottom: 16px; font-size: 12px; color: var(--text-muted); text-transform: uppercase;">Layers</h4>
+                    <div id="layers-list">
+                        <!-- Layers will be injected here -->
+                    </div>
+                </div>
+            </aside>
+
+            <main class="editor-main">
+                <header class="editor-header">
+                    <div id="editor-site-name" style="font-weight: 700;">Untitled Project</div>
+                    <div class="device-toggle">
+                        <button class="device-btn active" onclick="setDevice('desktop')">Desktop</button>
+                        <button class="device-btn" onclick="setDevice('tablet')">Tablet</button>
+                        <button class="device-btn" onclick="setDevice('mobile')">Mobile</button>
+                    </div>
+                    <div style="display: flex; gap: 12px;">
+                        <button class="btn-outline" onclick="saveProject()">Save</button>
+                        <button class="btn-primary" onclick="publishProject()">Publish</button>
+                    </div>
+                </header>
+
+                <div class="canvas-container">
+                    <div id="canvas" class="website-canvas">
+                        <!-- Website content renders here -->
+                    </div>
+                </div>
+            </main>
+
+            <aside class="editor-panel">
+                <h3 style="margin-bottom: 24px;">Properties</h3>
+                <div id="properties-panel">
+                    <p style="color: var(--text-muted); font-size: 14px;">Select an element to edit its properties.</p>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Copilot -->
+        <div class="copilot-btn" onclick="toggleCopilot()">🤖</div>
+        <div id="copilot" class="copilot-panel">
+            <div class="copilot-header">
+                <div style="font-weight: 700;">AI Copilot</div>
+                <button onclick="toggleCopilot()" style="background: transparent; color: white;">✕</button>
+            </div>
+            <div class="copilot-messages" id="copilotMessages">
+                <div class="msg msg-ai">Hello! I'm your AI design assistant. How can I help you improve this website today?</div>
+            </div>
+            <div class="copilot-input">
+                <input type="text" id="copilotInput" placeholder="e.g. Make the hero section more premium">
+                <button class="btn-primary" onclick="askCopilot()">Send</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- State Management ---
+        let state = {
+            currentView: 'landing',
+            user: null,
+            projects: [
+                { id: 1, name: 'Lumina Interior', industry: 'agency', status: 'Published', lastUpdated: '2 hours ago' },
+                { id: 2, name: 'CloudScale SaaS', industry: 'saas', status: 'Draft', lastUpdated: '1 day ago' }
+            ],
+            currentProject: null,
+            editingElement: null,
+            device: 'desktop'
+        };
+
+        // --- View Router ---
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(`view-${viewId}`).classList.add('active');
+            state.currentView = viewId;
+            window.scrollTo(0, 0);
+
+            if (viewId === 'dashboard') renderProjects();
+        }
+
+        function handleAuth(e, type) {
+            e.preventDefault();
+            showLoading(type === 'signup' ? 'Creating your account...' : 'Logging in...');
+            setTimeout(() => {
+                hideLoading();
+                state.user = { name: 'Demo User' };
+                switchView('dashboard');
+            }, 1500);
+        }
+
+        function showLoading(text) {
+            document.getElementById('loadingText').innerText = text;
+            document.getElementById('loading').style.display = 'flex';
+        }
+
+        function hideLoading() {
+            document.getElementById('loading').style.display = 'none';
+        }
+
+        // --- Dashboard Logic ---
+        function renderProjects() {
+            const list = document.getElementById('projectsList');
+            list.innerHTML = state.projects.map(p => `
+                <div class="project-card" onclick="openProject(${p.id})">
+                    <div class="project-thumb">
+                        <img src="https://images.unsplash.com/photo-1467232004584-a241de8bcf5d?auto=format&fit=crop&q=80&w=400" alt="${p.name}">
+                        <div style="position: absolute; bottom: 10px; right: 10px;">
+                            <span class="project-status">${p.status}</span>
+                        </div>
+                    </div>
+                    <div class="project-info">
+                        <div style="font-weight: 700; margin-bottom: 4px;">${p.name}</div>
+                        <div style="color: var(--text-muted); font-size: 12px;">Updated ${p.lastUpdated}</div>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // --- Generator Logic ---
+        function fillPrompt(name, desc) {
+            document.getElementById('gen-name').value = name;
+            document.getElementById('gen-desc').value = desc;
+        }
+
+        function generateWebsite() {
+            const name = document.getElementById('gen-name').value;
+            const desc = document.getElementById('gen-desc').value;
+            const industry = document.getElementById('gen-industry').value;
+
+            if (!name || !desc) return alert('Please fill in the business details.');
+
+            showLoading('Analyzing your business...');
+            
+            setTimeout(() => {
+                showLoading('Generating professional copy...');
+                setTimeout(() => {
+                    showLoading('Optimizing layout for conversion...');
+                    setTimeout(() => {
+                        const newProject = {
+                            id: Date.now(),
+                            name: name,
+                            industry: industry,
+                            description: desc,
+                            status: 'Draft',
+                            lastUpdated: 'Just now',
+                            data: generateSiteData(name, desc, industry)
+                        };
+                        state.projects.push(newProject);
+                        state.currentProject = newProject;
+                        hideLoading();
+                        openProject(newProject.id);
+                    }, 1500);
+                }, 1500);
+            }, 1500);
+        }
+
+        function generateSiteData(name, desc, industry) {
+            // Simulated AI Generation Logic
+            const templates = {
+                agency: [
+                    { type: 'hero', title: name, subtitle: desc, btn: 'View Portfolio' },
+                    { type: 'services', items: ['Design Strategy', 'Technical Execution', 'Brand Identity'] },
+                    { type: 'footer', text: `© 2024 ${name}. Premium Design Solutions.` }
+                ],
+                saas: [
+                    { type: 'hero', title: `Scale your workflow with ${name}`, subtitle: desc, btn: 'Start Free Trial' },
+                    { type: 'features', items: ['Cloud Native', 'Real-time Analytics', 'Enterprise Security'] },
+                    { type: 'footer', text: `© 2024 ${name}. The future of productivity.` }
+                ],
+                restaurant: [
+                    { type: 'hero', title: `Experience ${name}`, subtitle: desc, btn: 'Book a Table' },
+                    { type: 'menu', items: ['Signature Dishes', 'Wine Pairing', 'Seasonal Specials'] },
+                    { type: 'footer', text: `© 2024 ${name}. Fine dining excellence.` }
+                ]
+            };
+
+            return templates[industry] || templates.agency;
+        }
+
+        // --- Editor Logic ---
+        function openProject(id) {
+            const project = state.projects.find(p => p.id === id);
+            if (!project) return;
+            
+            // If project has no data (pre-existing demo projects), give it some
+            if (!project.data) {
+                project.data = generateSiteData(project.name, "A premium business solution.", project.industry);
+            }
+
+            state.currentProject = project;
+            document.getElementById('editor-site-name').innerText = project.name;
+            renderCanvas();
+            renderLayers();
+            switchView('editor');
+        }
+
+        function renderCanvas() {
+            const canvas = document.getElementById('canvas');
+            const data = state.currentProject.data;
+            
+            canvas.innerHTML = data.map((section, idx) => {
+                if (section.type === 'hero') {
+                    return `
+                        <div class="site-section site-hero" onclick="editElement(${idx})">
+                            <h1 id="el-${idx}-title">${section.title}</h1>
+                            <p id="el-${idx}-subtitle">${section.subtitle}</p>
+                            <button class="btn-primary" style="background: #0f172a">${section.btn}</button>
+                        </div>
+                    `;
+                }
+                if (section.type === 'services' || section.type === 'features' || section.type === 'menu') {
+                    return `
+                        <div class="site-section" onclick="editElement(${idx})" style="background: white">
+                            <h2 style="text-align: center; margin-bottom: 40px;">${section.type.toUpperCase()}</h2>
+                            <div class="site-grid">
+                                ${section.items.map(item => `
+                                    <div class="site-card">
+                                        <div style="font-size: 24px; margin-bottom: 16px;">✨</div>
+                                        <h3 style="margin-bottom: 12px;">${item}</h3>
+                                        <p style="color: #64748b; font-size: 14px;">Tailored solutions designed for your specific business needs and growth goals.</p>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        </div>
+                    `;
+                }
+                if (section.type === 'footer') {
+                    return `
+                        <div class="site-section site-footer" onclick="editElement(${idx})">
+                            <p>${section.text}</p>
+                        </div>
+                    `;
+                }
+            }).join('');
+        }
+
+        function renderLayers() {
+            const list = document.getElementById('layers-list');
+            list.innerHTML = state.currentProject.data.map((s, idx) => `
+                <div class="nav-item" style="font-size: 13px;" onclick="editElement(${idx})">
+                    <span>☰</span> ${s.type.charAt(0).toUpperCase() + s.type.slice(1)}
+                </div>
+            `).join('');
+        }
+
+        function editElement(idx) {
+            state.editingElement = idx;
+            const section = state.currentProject.data[idx];
+            const panel = document.getElementById('properties-panel');
+            
+            let html = `
+                <div class="form-group">
+                    <label>Section Type</label>
+                    <input type="text" value="${section.type}" disabled>
+                </div>
+            `;
+
+            if (section.title !== undefined) {
+                html += `
+                    <div class="form-group">
+                        <label>Title</label>
+                        <input type="text" value="${section.title}" oninput="updateElement('title', this.value)">
+                    </div>
+                `;
+            }
+
+            if (section.subtitle !== undefined) {
+                html += `
+                    <div class="form-group">
+                        <label>Subtitle</label>
+                        <textarea rows="3" oninput="updateElement('subtitle', this.value)">${section.subtitle}</textarea>
+                    </div>
+                `;
+            }
+
+            if (section.text !== undefined) {
+                html += `
+                    <div class="form-group">
+                        <label>Footer Text</label>
+                        <input type="text" value="${section.text}" oninput="updateElement('text', this.value)">
+                    </div>
+                `;
+            }
+
+            html += `
+                <div style="margin-top: 24px; display: flex; gap: 8px;">
+                    <button class="btn-outline" style="flex: 1; font-size: 12px;" onclick="moveElement(${idx}, -1)">Move Up</button>
+                    <button class="btn-outline" style="flex: 1; font-size: 12px;" onclick="moveElement(${idx}, 1)">Move Down</button>
+                </div>
+                <button class="btn-secondary" style="width: 100%; margin-top: 12px; color: var(--danger); border-color: rgba(239, 68, 68, 0.2);" onclick="deleteElement(${idx})">Delete Section</button>
+            `;
+
+            panel.innerHTML = html;
+        }
+
+        function updateElement(key, val) {
+            state.currentProject.data[state.editingElement][key] = val;
+            renderCanvas();
+        }
+
+        function setDevice(device) {
+            const canvas = document.getElementById('canvas');
+            canvas.classList.remove('canvas-tablet', 'canvas-mobile');
+            if (device !== 'desktop') canvas.classList.add(`canvas-${device}`);
+            
+            document.querySelectorAll('.device-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            state.device = device;
+        }
+
+        function saveProject() {
+            alert('Project saved successfully!');
+        }
+
+        function publishProject() {
+            showLoading('Publishing to production...');
+            setTimeout(() => {
+                hideLoading();
+                const url = `https://siteforge.ai/sites/${state.currentProject.id}`;
+                alert(`Your website is live at: ${url}`);
+            }, 2000);
+        }
+
+        // --- Copilot Logic ---
+        function toggleCopilot() {
+            document.getElementById('copilot').classList.toggle('active');
+        }
+
+        function askCopilot() {
+            const input = document.getElementById('copilotInput');
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            addMessage(msg, 'user');
+            input.value = '';
+
+            setTimeout(() => {
+                const response = getCopilotResponse(msg);
+                addMessage(response.text, 'ai');
+                if (response.action) applyAIAction(response.action);
+            }, 1000);
+        }
+
+        function addMessage(text, sender) {
+            const box = document.getElementById('copilotMessages');
+            const div = document.createElement('div');
+            div.className = `msg msg-${sender}`;
+            div.innerText = text;
+            box.appendChild(div);
+            box.scrollTop = box.scrollHeight;
+        }
+
+        function getCopilotResponse(msg) {
+            const m = msg.toLowerCase();
+            if (m.includes('premium')) {
+                return { 
+                    text: "I've updated the typography to a more sophisticated serif-blend and increased the whitespace for a luxury feel. How does it look?", 
+                    action: 'make_premium' 
+                };
+            }
+            if (m.includes('color')) {
+                return { 
+                    text: "I suggest a deep navy and gold palette for this industry. Shall I apply it?", 
+                    action: 'change_colors' 
+                };
+            }
+            return { text: "I can help with that! I've analyzed your layout and suggest adding a 'Testimonials' section to build social proof. Would you like me to generate one?" };
+        }
+
+        function applyAIAction(action) {
+            if (action === 'make_premium') {
+                document.getElementById('canvas').style.fontFamily = "'Plus Jakarta Sans', serif";
+                state.currentProject.data.forEach(s => {
+                    if (s.title) s.title = s.title.toUpperCase();
+                });
+                renderCanvas();
+            }
+        }
+
+        // --- Init ---
+        renderProjects();
+
+    </script>
+</body>
+</html></html>
